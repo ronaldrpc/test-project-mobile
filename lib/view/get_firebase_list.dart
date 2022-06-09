@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/dto/person.dart';
+import 'package:flutter_application_1/domain/firebase_connection.dart';
+import 'package:flutter_application_1/entities/record.dart';
 import 'dart:convert';
+
+import 'package:flutter_application_1/entities/response_firebase.dart';
 
 class CallFirebase extends StatefulWidget {
   const CallFirebase({Key? key}) : super(key: key);
@@ -11,13 +15,31 @@ class CallFirebase extends StatefulWidget {
 }
 
 class _CallFirebaseState extends State<CallFirebase> {
-  List<Person> records = [];
-  final referenceDatabase = FirebaseDatabase.instance;
+  List<Record> records = [];
+  FirebaseConnection con = FirebaseConnection();
+  late ResponseFirebase response;
 
+  Future<void> getRecordsFromFirebase() async {
+    final dbReference = con.instanceFirebase();
+    final dbRecords = await con.getRecords(dbReference);
+    //print(dbRecords);
+    final mappedData = formatFirebaseDataToJSON(dbRecords);
+    final res = ResponseFirebase.fromJson(mappedData);
+    //print(res.records);
+    setState(() {
+      records = res.records!;
+    });
+  }
+
+  Map<String, dynamic> formatFirebaseDataToJSON(data) {
+    final dataEncoded = json.encode(data);
+    return json.decode(dataEncoded);
+  }
+  
   @override
   Widget build(BuildContext context) {
     
-    
+    getRecordsFromFirebase();
     //callDatabase();
     return Scaffold(
       appBar: AppBar(
@@ -36,13 +58,13 @@ class _CallFirebaseState extends State<CallFirebase> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => getRecordList(),
+        onPressed: () {},
         child: const Icon(Icons.play_arrow_rounded)
       ),
     );
   }
 
-  void openAlertDialog(BuildContext context, Person persona) {
+  void openAlertDialog(BuildContext context, Record persona) {
     AlertDialog alert = AlertDialog(
       title: Text(persona.nombre! + " " + persona.apellido!),
       content: Text(persona.toString()),
@@ -56,36 +78,7 @@ class _CallFirebaseState extends State<CallFirebase> {
     showDialog(context: context, builder: (BuildContext context) => alert);
   }
 
-  //-------------------------------------------------------
 
-  void getRecordList() {
-    print(":v");
-    final ref = referenceDatabase.ref('/Registros');
-    ref.onValue.listen((event) {
-      final data = event.snapshot.value;
-      final mappedData = convertCollectionToJSON(data);
-      createModelObjects(mappedData);
-    });
-  }
-
-  Map<String, dynamic> convertCollectionToJSON(data) {
-    final dataEncoded = json.encode(data);
-    final Map<String, dynamic> mappedData = json.decode(dataEncoded);
-    return mappedData;
-  }
-
-  void createModelObjects(mappedData) {
-    List<Person> tempRecords = [];
-    mappedData.forEach((key, value) {
-      Person person = Person.fromJson(value);
-      tempRecords.add(person);
-    });
-    setState(() {
-      records = tempRecords;
-    });
-  }
-
-  
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   void callDatabase() {
@@ -101,10 +94,10 @@ class _CallFirebaseState extends State<CallFirebase> {
       final Map<String, dynamic> mappedData = json.decode(dataEncoded);
       // final mappedData = Map<String, dynamic>.from(data as Map);
       
-      List<Person> people = [];
+      List<Record> people = [];
       mappedData.forEach((key, value) {
         // print('$key - $value');
-        Person person = Person.fromJson(value);
+        Record person = Record.fromJson(value);
         people.add(person);
         print(person.carro!.marca);
       });
