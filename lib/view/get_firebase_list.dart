@@ -20,21 +20,18 @@ class _CallFirebaseState extends State<CallFirebase> {
   late ResponseFirebase response;
 
   Future<void> getRecordsFromFirebase() async {
-    final dbReference = con.instanceFirebase();
-    final dbRecords = await con.getRecords(dbReference);
+    final dbRecords = await con.getRecords();
     //print(dbRecords);
-    final mappedData = formatFirebaseDataToJSON(dbRecords);
-    final res = ResponseFirebase.fromJson(mappedData);
-    //print(res.records);
+    final res = ResponseFirebase.fromJson(dbRecords);
     setState(() {
       records = res.records!;
     });
+
+    //Probando obtener un registro especifico con la key = 1213141
+    // final dbSpecificRecord = await con.getRecordByPath('Registros/1213141');
+    // print(dbSpecificRecord);
   }
 
-  Map<String, dynamic> formatFirebaseDataToJSON(data) {
-    final dataEncoded = json.encode(data);
-    return json.decode(dataEncoded);
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -86,6 +83,7 @@ class _CallFirebaseState extends State<CallFirebase> {
     DatabaseReference ref = database.ref("/Registros");
 
     ref.onValue.listen((event) {
+      print("inside stream");
       final data = event.snapshot.value;
       final dataEncoded = json.encode(data);
       // var temp = {"123456789": ":v"};
@@ -99,9 +97,10 @@ class _CallFirebaseState extends State<CallFirebase> {
         // print('$key - $value');
         Record person = Record.fromJson(value);
         people.add(person);
-        print(person.carro!.marca);
+        //print(person.carro!.marca);
       });
     });
+    print("outside stream");
   }
 
 }
