@@ -6,7 +6,7 @@ class FirebaseConnection {
   
   DatabaseReference instanceFirebase() {
     FirebaseDatabase database = FirebaseDatabase.instance;
-    return database.ref('');
+    return database.ref('/Registros');
   }
 
   Future<Map<String, dynamic>> getRecords() async {
@@ -17,12 +17,12 @@ class FirebaseConnection {
     return {};
   }
 
-  Future<Object?> getRecordByPath(String path) async {
+  Future<Map<String, dynamic>> getRecordByPath(String path) async {
     final snapshot = await instanceFirebase().child(path).get();
     if (snapshot.exists){
       return formatFirebaseDataToJSON(snapshot.value);
     }
-    return null;
+    return {};
   }
 
   Map<String, dynamic> formatFirebaseDataToJSON(data) {

@@ -8,8 +8,8 @@ class ResponseFirebase {
 
   ResponseFirebase.fromJson(Map<String, dynamic> json) {
     records = [];
-    // print(json['Registros'].runtimeType);
-    json["Registros"].forEach((key, value) {
+    //print(json['Registros'].values.toList().runtimeType);
+    json.forEach((key, value) {
       records!.add(Record.fromJson(value));
     });
   }
