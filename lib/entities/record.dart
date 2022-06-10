@@ -1,7 +1,7 @@
-import 'package:flutter_application_1/dto/car.dart';
-import 'package:flutter_application_1/dto/service.dart';
+import 'package:flutter_application_1/entities/car.dart';
+import 'package:flutter_application_1/entities/service.dart';
 
-class Person {
+class Record {
   String? nombre;
   String? apellido;
   String? licencia;
@@ -9,9 +9,9 @@ class Person {
   Car? carro;
   Service? servicio;
 
-  Person({this.nombre, this.apellido, this.licencia, this.cel, this.carro, this.servicio});
+  Record({this.nombre, this.apellido, this.licencia, this.cel, this.carro, this.servicio});
 
-  Person.fromJson(Map<String, dynamic> json) {
+  Record.fromJson(Map<String, dynamic> json) {
     nombre = json['nombre'];
     apellido = json['apellido'];
     licencia = json['licencia'];
