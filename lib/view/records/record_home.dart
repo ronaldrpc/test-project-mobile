@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/entities/record.dart';
 import 'package:flutter_application_1/view/records/record_form.dart';
 import 'package:flutter_application_1/view/records/record_list_view.dart';
+import 'package:flutter_application_1/view/records/record_multi_form.dart';
 
 class RecordHome extends StatefulWidget {
   const RecordHome({Key? key}) : super(key: key);
@@ -15,14 +16,12 @@ class _RecordHomeState extends State<RecordHome> {
   final screens = [
     const RecordListView(),
     RecordForm(action: "Crear", record: Record()),
+    RecordMultiForm(record: Record()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Registros'),
-        // ),
         body: screens[_selectedIndex],
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
@@ -44,6 +43,10 @@ class _RecordHomeState extends State<RecordHome> {
               NavigationDestination(
                 icon: Icon(Icons.edit),
                 label: 'Crea'
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.stream),
+                label: 'Pasos'
               ),
             ],
           )
