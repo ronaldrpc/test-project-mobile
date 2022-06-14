@@ -17,4 +17,13 @@ class Car {
   String toString() {
     return "\nColor: $color \nMarca: $marca \nModelo: $modelo \nPlaca: $placa";
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "Color": color,
+      "marca": marca,
+      "modelo": modelo,
+      "placa": placa,
+    };
+  }
 }

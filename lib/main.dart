@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_application_1/view/changeable_text_color.dart';
 import 'package:flutter_application_1/view/count_screen.dart';
-import 'package:flutter_application_1/view/get_firebase_list.dart';
+import 'package:flutter_application_1/view/records/record_home.dart';
+import 'package:flutter_application_1/view/records/record_list_view.dart';
 import 'package:flutter_application_1/view/home_view.dart';
 import 'package:flutter_application_1/view/listview_1.dart';
 
@@ -21,9 +22,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CallFirebase(), //ListView1() or ChangeableTextColor() or HomeView() or Counter()
+      theme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.light,
+        useMaterial3: false,
+      ),
+      home: const RecordHome(), //ListView1() or ChangeableTextColor() or HomeView() or Counter()
     );
   }
 }

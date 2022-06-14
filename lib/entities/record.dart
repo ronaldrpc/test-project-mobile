@@ -2,6 +2,7 @@ import 'package:flutter_application_1/entities/car.dart';
 import 'package:flutter_application_1/entities/service.dart';
 
 class Record {
+  String? id;
   String? nombre;
   String? apellido;
   String? licencia;
@@ -23,5 +24,18 @@ class Record {
   @override
   String toString() {
     return "Nombre: $nombre \nApellido: $apellido \nLicencia: $licencia \nCel: $cel \n\nCarro: $carro \n\nServicio: $servicio";
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "nombre": nombre,
+      "apellido": apellido,
+      "cell": cel,
+      "licencia": licencia,
+      "Carro": (carro != null) ? carro!.toJson() 
+      : Car().toJson(),
+      "Servicio": (servicio != null) ? servicio!.toJson() 
+      : Service(lavado: "no", polish: "no",  tapiceria: "no").toJson(),
+    };
   }
 }
