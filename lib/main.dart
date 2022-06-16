@@ -1,12 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firebase_options.dart';
-import 'package:flutter_application_1/view/changeable_text_color.dart';
-import 'package:flutter_application_1/view/count_screen.dart';
-import 'package:flutter_application_1/view/records/record_home.dart';
-import 'package:flutter_application_1/view/records/record_list_view.dart';
-import 'package:flutter_application_1/view/home_view.dart';
-import 'package:flutter_application_1/view/listview_1.dart';
+import 'package:flutter_application_1/view/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +20,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Colors.red,
         brightness: Brightness.light,
-        useMaterial3: false,
+        useMaterial3: true,
+        fontFamily: 'NotoSans'
       ),
-      home: const RecordHome(), //ListView1() or ChangeableTextColor() or HomeView() or Counter()
+      home: const Splash(),
     );
   }
 }

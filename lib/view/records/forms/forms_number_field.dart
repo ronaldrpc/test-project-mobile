@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 
 class FormNumberField extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final field;
+  // ignore: prefer_typing_uninitialized_variables
   final data;
+  // ignore: prefer_typing_uninitialized_variables
   final setState;
   const FormNumberField({Key? key, this.field, this.data, this.setState}) : super(key: key);
 

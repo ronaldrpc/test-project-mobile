@@ -16,14 +16,15 @@ class RecordForm extends StatefulWidget {
 class _RecordFormState extends State<RecordForm> {
   final formKey = GlobalKey<FormState>();
   late Map<String, dynamic> data = widget.record.toJson();
-  
+  bool _editable = false;
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.action} registro', style: const TextStyle(fontSize: 24)),
+        title: Text('${_editable ? widget.action : 'Ver'} registro',
+        style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
       ),
       body: Form(
         key: formKey,
@@ -31,7 +32,22 @@ class _RecordFormState extends State<RecordForm> {
         child: ListView(
           padding: const EdgeInsets.all(15),
           children: [
-            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text("Editable", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                Switch.adaptive(
+                  // activeColor: Colors.blueAccent,
+                  // activeTrackColor: Colors.blue.withOpacity(0.4),
+                  // inactiveThumbColor: Colors.orange,
+                  value: _editable,
+                  onChanged: (value) => setState(() => _editable = value)
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            const Text("Usuario", style: TextStyle(fontSize: 16)),
+            const SizedBox(height: 10),
             formTextField("nombre", data),
             const SizedBox(height: 16),
             formTextField("apellido", data),
@@ -62,6 +78,7 @@ class _RecordFormState extends State<RecordForm> {
 
             const SizedBox(height: 20),
             formSubmit(),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -70,7 +87,9 @@ class _RecordFormState extends State<RecordForm> {
 
   Widget formTextField(field, data) {
     return TextFormField(
+      readOnly: !_editable,
       decoration: InputDecoration(
+        filled: !_editable,
         labelText: "${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}",
         border: const OutlineInputBorder(),
       ),
@@ -88,7 +107,9 @@ class _RecordFormState extends State<RecordForm> {
 
   Widget formNumberField(field, data) {
     return TextFormField(
+      readOnly: !_editable,
       decoration: InputDecoration(
+        filled: !_editable,
         labelText: "${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}",
         border: const OutlineInputBorder(),
       ),
@@ -110,7 +131,7 @@ class _RecordFormState extends State<RecordForm> {
     return CheckboxListTile(
       title: Text("${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}"),
       value: isChecked,
-      onChanged: (value) => setState(() {
+      onChanged: !_editable ? null : (value) => setState(() {
         data[field] = (value!) ? "si" : "no";
       })
     );
@@ -124,8 +145,12 @@ class _RecordFormState extends State<RecordForm> {
         //   onPressed: () {},
         //   child: const Text('Cancel'),
         // ),
-        TextButton(
-          onPressed: () {
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            onPrimary: Theme.of(context).colorScheme.onPrimary,
+            primary: Theme.of(context).colorScheme.primary,
+          ),
+          onPressed: !_editable ? null : () {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
               formKey.currentState?.save();
@@ -141,7 +166,7 @@ class _RecordFormState extends State<RecordForm> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
-          child: const Text('Submit'),
+          child: const Text('Guardar cambios', style: TextStyle(fontSize: 20)),
         ),
       ],
     );
@@ -155,20 +180,3 @@ class _RecordFormState extends State<RecordForm> {
   
 }
 
-// Map<String, dynamic> data2 = {
-//     "nombre": "",
-//     "apellido": "",
-//     "cell": 0,
-//     "licencia": "",
-//     "Carro": {
-//       "Color": "",
-//       "marca": 0,
-//       "modelo": "",
-//       "placa": ""
-//     },
-//     "Servicio": {
-//       "lavado": "no",
-//       "polish": "no",
-//       "tapiceria": "no",
-//     },
-//   };

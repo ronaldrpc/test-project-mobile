@@ -13,25 +13,38 @@ class RecordHome extends StatefulWidget {
 
 class _RecordHomeState extends State<RecordHome> {
   int _selectedIndex = 0;
-  final screens = [
-    const RecordListView(),
-    RecordForm(action: "Crear", record: Record()),
-    RecordMultiForm(record: Record()),
-  ];
+  // final screens = [
+  //   const RecordListView(),
+  //   RecordForm(action: "Crear", record: Record()),
+  //   RecordMultiForm(record: Record(), goToListView: () => {}),
+  // ];
+
+  Widget _body() {
+    switch (_selectedIndex) {
+      case 0:
+        return const RecordListView();
+      case 1:
+        return RecordForm(action: "Crear", record: Record());
+      case 2:
+        return RecordMultiForm(record: Record(), goToListView: goToList);
+      default:
+        return const RecordListView();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: screens[_selectedIndex],
+        body: _body(), // screens[_selectedIndex],
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
             indicatorColor: Colors.blue.shade100,
             labelTextStyle: MaterialStateProperty.all(
-              const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
           child: NavigationBar(
-            height: 60,
+            height: 70,
             selectedIndex: _selectedIndex,
             onDestinationSelected: _onTapped,
             destinations: const [
@@ -58,6 +71,10 @@ class _RecordHomeState extends State<RecordHome> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void goToList() {
+    setState(() => _selectedIndex = 0);
   }
 }
 

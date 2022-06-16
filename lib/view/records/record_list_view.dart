@@ -34,18 +34,22 @@ class _RecordListViewState extends State<RecordListView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista registros', style: TextStyle(fontSize: 24)),
+        title: const Text(
+          'Listar registros', 
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
       ),
       body: Column(
         children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+            margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
             child: TextField(
               controller: searchController,
               onChanged: searchRecord,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 hintText: "Nombres Apellidos",
+                contentPadding: const EdgeInsets.all(15),
+                isDense: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(color: Colors.black)
@@ -58,8 +62,11 @@ class _RecordListViewState extends State<RecordListView> {
               itemCount: recordsToSearch.length,
               itemBuilder: (_, index) {
                 return ListTile(
-                  leading: const Icon(Icons.person_outline),
-                  title: Text("${recordsToSearch[index].nombre!} ${recordsToSearch[index].apellido!}"),
+                  leading: const Icon(Icons.person),
+                  title: Text(
+                    "${recordsToSearch[index].nombre!} ${recordsToSearch[index].apellido!}",
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
+                  ),
                   onTap: () {
                     //openAlertDialog(context, recordsToSearch[index]);
                     Navigator.push(

@@ -6,10 +6,12 @@ import 'package:flutter_application_1/view/records/forms/form_text_field.dart';
 import 'package:flutter_application_1/view/records/forms/forms_number_field.dart';
 
 
+// ignore: must_be_immutable
 class RecordMultiForm extends StatefulWidget {
   final Record record;
+  Function goToListView;
 
-  const RecordMultiForm({Key? key, required this.record}) : super(key: key);
+  RecordMultiForm({Key? key, required this.record, required this.goToListView}) : super(key: key);
 
   @override
   State<RecordMultiForm> createState() => _RecordMultiFormState();
@@ -18,13 +20,14 @@ class RecordMultiForm extends StatefulWidget {
 class _RecordMultiFormState extends State<RecordMultiForm> {
   late Map<String, dynamic> data = widget.record.toJson();
   int _selectedStep = 0;
-  bool _isCompleted = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pasos para registrar un registro'),
+        title: const Text(
+          'Pasos para registrar', 
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
       ),
       body: Stepper(
         type: StepperType.horizontal,
@@ -40,14 +43,25 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+                    primary: Theme.of(context).colorScheme.secondaryContainer,
+                  ),
                   onPressed: details.onStepCancel,
-                  child: const Text('Cancelar'),
+                  child: const Text('Cancelar', style: TextStyle(fontSize: 20)),
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Theme.of(context).colorScheme.onPrimary,
+                    primary: Theme.of(context).colorScheme.primary,
+                  ),
                   onPressed: details.onStepContinue,
-                  child: Text((lastStep) ? 'Enviar' : 'Siguiente'),
+                  child: Text(
+                    (lastStep) ? 'Enviar' : 'Siguiente', 
+                    style: const TextStyle(fontSize: 20)
+                  ),
                 ),
               ]
             ),
@@ -126,9 +140,7 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
     if (lastStep) {
       //saveRecord();
       showSnackBar();
-      setState(() {
-        _isCompleted = true;
-      });
+      widget.goToListView();
     }
     else {
       setState(() {
