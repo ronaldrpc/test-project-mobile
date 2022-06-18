@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/firebase_connection.dart';
 import 'package:flutter_application_1/entities/record.dart';
-import 'package:flutter_application_1/view/records/forms/form_check_field.dart';
-import 'package:flutter_application_1/view/records/forms/form_text_field.dart';
-import 'package:flutter_application_1/view/records/forms/forms_number_field.dart';
+import 'package:flutter_application_1/view/forms/form_check_field.dart';
+import 'package:flutter_application_1/view/forms/form_text_field.dart';
+import 'package:flutter_application_1/view/forms/forms_number_field.dart';
 
 
 // ignore: must_be_immutable
@@ -26,8 +26,8 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Pasos para registrar', 
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
+          'Registro', 
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500)),
       ),
       body: Stepper(
         type: StepperType.horizontal,
@@ -168,7 +168,7 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
     const snackBar = SnackBar(
       content: Text(
         message,
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 18),
       ),
     );
 

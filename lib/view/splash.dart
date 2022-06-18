@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view/records/record_home.dart';
+import 'package:flutter_application_1/view/menu.dart';
 import 'package:lottie/lottie.dart';
 
 
@@ -14,10 +14,10 @@ class _SplashState extends State<Splash> {
   
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: ((context) => const RecordHome()))
+        MaterialPageRoute(builder: ((context) => const Menu()))
       );
     });
     super.initState();

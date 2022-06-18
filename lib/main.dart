@@ -9,7 +9,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform
   );
   runApp(const MyApp());
-  //callDatabase();
 }
 
 class MyApp extends StatelessWidget {
@@ -20,9 +19,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorSchemeSeed: Colors.red,
+        colorSchemeSeed: Colors.blue[800],
         brightness: Brightness.light,
-        useMaterial3: true,
+        useMaterial3: false,
         fontFamily: 'NotoSans'
       ),
       home: const Splash(),

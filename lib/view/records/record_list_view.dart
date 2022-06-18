@@ -35,8 +35,8 @@ class _RecordListViewState extends State<RecordListView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Listar registros', 
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
+          'Lista de registros', 
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500)),
       ),
       body: Column(
         children: [
@@ -61,44 +61,31 @@ class _RecordListViewState extends State<RecordListView> {
             child: ListView.builder(
               itemCount: recordsToSearch.length,
               itemBuilder: (_, index) {
-                return ListTile(
-                  leading: const Icon(Icons.person),
-                  title: Text(
-                    "${recordsToSearch[index].nombre!} ${recordsToSearch[index].apellido!}",
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
-                  ),
-                  onTap: () {
-                    //openAlertDialog(context, recordsToSearch[index]);
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (content) {
-                          return RecordForm(action: "Editar", record: recordsToSearch[index]);
-                        }
-                      )
-                    );
-                  },
-                );
+                return CustomCard(recordsToSearch, index);
+                // return ListTile(
+                //   leading: const Icon(Icons.person),
+                //   title: Text(
+                //     "${recordsToSearch[index].nombre!} ${recordsToSearch[index].apellido!}",
+                //     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
+                //   ),
+                //   onTap: () {
+                //     //openAlertDialog(context, recordsToSearch[index]);
+                //     Navigator.push(
+                //       context, 
+                //       MaterialPageRoute(
+                //         builder: (content) {
+                //           return RecordForm(action: "Editar", record: recordsToSearch[index]);
+                //         }
+                //       )
+                //     );
+                //   },
+                // );
               },
             ),
           ),
         ],
       ),
     );
-  }
-
-  void openAlertDialog(BuildContext context, Record persona) {
-    AlertDialog alert = AlertDialog(
-      title: Text("${persona.nombre!} ${persona.apellido!}"),
-      content: Text(persona.toString()),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text("OK"),
-        )
-      ]
-    );
-    showDialog(context: context, builder: (BuildContext context) => alert);
   }
 
   void searchRecord(String input) {
@@ -111,5 +98,30 @@ class _RecordListViewState extends State<RecordListView> {
       recordsToSearch = filteredRecords;
     });
   }
+}
+
+class CustomCard extends StatelessWidget {
+  const CustomCard(List<Record> records, int index, {Key? key}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        // elevation: 2,
+        // color: Theme.of(context).colorScheme.surfaceVariant,
+        color: const Color.fromARGB(193, 224, 227, 230),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0))
+        ),
+        child: Row(
+          children: [
+            Column(),
+            Column(),
+          ],
+        ),
+      ),
+    );
+  }
+  
 }
 

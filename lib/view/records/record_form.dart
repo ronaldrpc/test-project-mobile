@@ -23,8 +23,10 @@ class _RecordFormState extends State<RecordForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${_editable ? widget.action : 'Ver'} registro',
-        style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
+        title: Text(
+          '${_editable ? widget.action : 'Ver'} registro',
+          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w500)
+        ),
       ),
       body: Form(
         key: formKey,
