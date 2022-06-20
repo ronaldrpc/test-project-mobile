@@ -61,7 +61,7 @@ class _RecordListViewState extends State<RecordListView> {
             child: ListView.builder(
               itemCount: recordsToSearch.length,
               itemBuilder: (_, index) {
-                return CustomCard(recordsToSearch, index);
+                return CustomCard(records: recordsToSearch, index: index);
                 // return ListTile(
                 //   leading: const Icon(Icons.person),
                 //   title: Text(
@@ -101,7 +101,9 @@ class _RecordListViewState extends State<RecordListView> {
 }
 
 class CustomCard extends StatelessWidget {
-  const CustomCard(List<Record> records, int index, {Key? key}) : super(key: key);
+  final List<Record> records;
+  final int index;
+  const CustomCard({Key? key, required this.records, required this.index}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -114,9 +116,42 @@ class CustomCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(20.0))
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(),
-            Column(),
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  child: const Icon(Icons.person_outline),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${records[index].nombre!} ${records[index].apellido!}",
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                    ),
+                    const Text("Nombre y apellido"),
+                  ]
+                )
+              ]
+            ),
+            Container(
+              margin: const EdgeInsets.only(right: 20),
+              child: TextButton(
+                child: const Icon(Icons.keyboard_arrow_right),
+                onPressed: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (content) {
+                        return RecordForm(action: "Editar", record: records[index]);
+                      }
+                    )
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

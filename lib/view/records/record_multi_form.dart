@@ -138,7 +138,7 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
   void continueStep() {
     final lastStep = (_selectedStep == getSteps().length - 1);
     if (lastStep) {
-      //saveRecord();
+      saveRecord();
       showSnackBar();
       widget.goToListView();
     }
