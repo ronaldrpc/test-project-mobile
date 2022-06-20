@@ -168,7 +168,6 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
     const snackBar = SnackBar(
       content: Text(
         message,
-        style: TextStyle(fontSize: 18),
       ),
     );
 

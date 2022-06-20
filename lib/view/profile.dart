@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view/forms/form_text_field.dart';
-import 'package:flutter_application_1/view/forms/forms_number_field.dart';
 
 
 class ProfileView extends StatefulWidget {
