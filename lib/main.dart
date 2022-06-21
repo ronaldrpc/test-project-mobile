@@ -5,9 +5,7 @@ import 'package:flutter_application_1/view/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -19,11 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorSchemeSeed: Colors.blue[800],
-        brightness: Brightness.light,
-        useMaterial3: false,
-        fontFamily: 'NotoSans'
-      ),
+          colorSchemeSeed: Color(0xFF584CD1),
+          brightness: Brightness.light,
+          useMaterial3: false,
+          fontFamily: 'NotoSans'),
       home: const Splash(),
     );
   }
