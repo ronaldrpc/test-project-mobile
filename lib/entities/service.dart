@@ -16,4 +16,12 @@ class Service {
   String toString() {
     return "\nLavado: $lavado \nPolish: $polish \nTapiceria: $tapiceria";
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "lavado": lavado,
+      "polish": polish,
+      "tapiceria": tapiceria,
+    };
+  }
 }
