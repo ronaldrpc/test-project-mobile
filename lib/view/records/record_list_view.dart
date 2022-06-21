@@ -18,13 +18,11 @@ class _RecordListViewState extends State<RecordListView> {
   List<Record> recordsToSearch = [];
 
   Future<void> getRecordsFromFirebase() async {
-    if (records.isEmpty) {
-      final recordList = await connection.getRecords();
-      setState(() {
-        records = recordList.records!;
-        recordsToSearch = records;
-      });
-    }
+    final recordList = await connection.getRecords();
+    setState(() {
+      records = recordList.records!;
+      recordsToSearch = records;
+    });
   }
 
   

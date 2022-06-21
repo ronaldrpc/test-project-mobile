@@ -16,7 +16,7 @@ class Record {
     nombre = json['nombre'];
     apellido = json['apellido'];
     licencia = json['licencia'];
-    cel = json['cel'];
+    cel = json['cell'];
     carro = Car.fromJson(json['Carro']);
     servicio = Service.fromJson(json['Servicio']);
   }

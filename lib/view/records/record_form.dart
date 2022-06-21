@@ -20,7 +20,6 @@ class _RecordFormState extends State<RecordForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -156,16 +155,16 @@ class _RecordFormState extends State<RecordForm> {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
               formKey.currentState?.save();
-              const message = "Se guardó el registro de forma exitosa";
+              const message = "El registro se guardó de forma exitosa";
               const snackBar = SnackBar(
                 content: Text(
                   message,
-                  style: TextStyle(fontSize: 20),
                 ),
               );
 
               saveRecord();
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              Navigator.pop(context);
             }
           },
           child: const Text('Guardar cambios', style: TextStyle(fontSize: 20)),
