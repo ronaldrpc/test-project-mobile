@@ -82,6 +82,8 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
           child: Column(
             children: [
               const SizedBox(height: 16),
+              FormTextField(field: "image", data: data, setState: setState, editable: true),
+              const SizedBox(height: 16),
               FormTextField(field: "nombre", data: data, setState: setState, editable: true),
               const SizedBox(height: 16),
               FormTextField(field: "apellido", data: data, setState: setState, editable: true),
