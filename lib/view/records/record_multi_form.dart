@@ -82,13 +82,13 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              FormTextField(field: "nombre", data: data, setState: setState),
+              FormTextField(field: "nombre", data: data, setState: setState, editable: true),
               const SizedBox(height: 16),
-              FormTextField(field: "apellido", data: data, setState: setState),
+              FormTextField(field: "apellido", data: data, setState: setState, editable: true),
               const SizedBox(height: 16),
-              FormNumberField(field: "cell", data: data, setState: setState),
+              FormNumberField(field: "cel", data: data, setState: setState, editable: true),
               const SizedBox(height: 16),
-              FormTextField(field: "licencia", data: data, setState: setState),
+              FormTextField(field: "licencia", data: data, setState: setState, editable: true),
             ],
           ),
         ),
@@ -102,13 +102,13 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              FormTextField(field: "Color", data: data['Carro'], setState: setState),
+              FormTextField(field: "Color", data: data['Carro'], setState: setState, editable: true),
               const SizedBox(height: 16),           
-              FormTextField(field: "marca", data: data['Carro'], setState: setState),
+              FormTextField(field: "marca", data: data['Carro'], setState: setState, editable: true),
               const SizedBox(height: 16),           
-              FormNumberField(field: "modelo", data: data['Carro'], setState: setState),
+              FormNumberField(field: "modelo", data: data['Carro'], setState: setState, editable: true),
               const SizedBox(height: 16),           
-              FormTextField(field: "placa", data: data['Carro'], setState: setState),
+              FormTextField(field: "placa", data: data['Carro'], setState: setState, editable: true),
             ],
           )
         ),
@@ -122,11 +122,11 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              FormCheckField(field: "lavado", data: data['Servicio'], setState: setState),
+              FormCheckField(field: "lavado", data: data['Servicio'], setState: setState, editable: true),
               const SizedBox(height: 16),
-              FormCheckField(field: "polish", data: data['Servicio'], setState: setState),
+              FormCheckField(field: "polish", data: data['Servicio'], setState: setState, editable: true),
               const SizedBox(height: 16),
-              FormCheckField(field: "tapiceria", data: data['Servicio'], setState: setState),
+              FormCheckField(field: "tapiceria", data: data['Servicio'], setState: setState, editable: true),
             ],
           )
         ),
@@ -159,7 +159,7 @@ class _RecordMultiFormState extends State<RecordMultiForm> {
 
   void saveRecord() async {
     final con = FirebaseConnection();
-    final id = (widget.record.id != null) ? widget.record.id : "123";
+    final id = (widget.record.id != null) ? widget.record.id : DateTime.now().microsecondsSinceEpoch.toString();
     await con.writeRecord(data, id!);
   }
 

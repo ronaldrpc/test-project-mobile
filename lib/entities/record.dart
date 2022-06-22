@@ -6,17 +6,20 @@ class Record {
   String? nombre;
   String? apellido;
   String? licencia;
+  String? image;
   int? cel;
   Car? carro;
   Service? servicio;
 
-  Record({this.nombre, this.apellido, this.licencia, this.cel, this.carro, this.servicio});
+  Record({this.nombre, this.apellido, this.licencia, this.id, this.cel, this.carro, this.servicio});
 
   Record.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     nombre = json['nombre'];
     apellido = json['apellido'];
     licencia = json['licencia'];
-    cel = json['cell'];
+    image = json['image'];
+    cel = json['cel'];
     carro = Car.fromJson(json['Carro']);
     servicio = Service.fromJson(json['Servicio']);
   }
@@ -28,9 +31,11 @@ class Record {
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "nombre": nombre,
       "apellido": apellido,
-      "cell": cel,
+      "cel": cel,
+      "image": image,
       "licencia": licencia,
       "Carro": (carro != null) ? carro!.toJson() 
       : Car().toJson(),

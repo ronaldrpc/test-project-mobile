@@ -19,10 +19,12 @@ class _RecordListViewState extends State<RecordListView> {
 
   Future<void> getRecordsFromFirebase() async {
     final recordList = await connection.getRecords();
-    setState(() {
-      records = recordList.records!;
-      recordsToSearch = records;
-    });
+    if (mounted && records.isEmpty) {
+      setState(() {
+        records = recordList.records!;
+        recordsToSearch = records;
+      });
+    }
   }
 
   
@@ -60,28 +62,14 @@ class _RecordListViewState extends State<RecordListView> {
               itemCount: recordsToSearch.length,
               itemBuilder: (_, index) {
                 return CustomCard(records: recordsToSearch, index: index);
-                // return ListTile(
-                //   leading: const Icon(Icons.person),
-                //   title: Text(
-                //     "${recordsToSearch[index].nombre!} ${recordsToSearch[index].apellido!}",
-                //     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
-                //   ),
-                //   onTap: () {
-                //     //openAlertDialog(context, recordsToSearch[index]);
-                //     Navigator.push(
-                //       context, 
-                //       MaterialPageRoute(
-                //         builder: (content) {
-                //           return RecordForm(action: "Editar", record: recordsToSearch[index]);
-                //         }
-                //       )
-                //     );
-                //   },
-                // );
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: resetRecords,
+        child: const Icon(Icons.refresh),
       ),
     );
   }
@@ -96,6 +84,22 @@ class _RecordListViewState extends State<RecordListView> {
       recordsToSearch = filteredRecords;
     });
   }
+
+  void resetRecords() {
+    setState(() {
+      records = [];
+      recordsToSearch = [];
+      showSnackBar();
+    });
+  }
+
+  void showSnackBar() {
+    const message = "Actualizado!";
+    const snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }
 
 class CustomCard extends StatelessWidget {
@@ -107,8 +111,6 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        // elevation: 2,
-        // color: Theme.of(context).colorScheme.surfaceVariant,
         color: const Color.fromARGB(193, 224, 227, 230),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))
@@ -143,7 +145,8 @@ class CustomCard extends StatelessWidget {
                     context, 
                     MaterialPageRoute(
                       builder: (content) {
-                        return RecordForm(action: "Editar", record: records[index]);
+                        return RecordForm(action: "Editar", record: Record(), id: records[index].id!);
+                        // return GetRecord(action: "Editar", recordId: records[index].id!);
                       }
                     )
                   );

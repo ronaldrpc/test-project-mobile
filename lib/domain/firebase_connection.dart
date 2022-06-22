@@ -22,8 +22,9 @@ class FirebaseConnection {
   Future<ResponseFirebase> getRecordByPath(String path) async {
     final snapshot = await instanceFirebase().child(path).get();
     if (snapshot.exists){
-      final formatedJson = formatFirebaseDataToJSON(snapshot.value);
-      return ResponseFirebase.fromJson(formatedJson);
+      final valueJson = formatFirebaseDataToJSON(snapshot.value);
+      final recordJson = {path: valueJson};
+      return ResponseFirebase.fromJson(recordJson);
     }
     return ResponseFirebase();
   }
@@ -35,7 +36,7 @@ class FirebaseConnection {
 
   Future<void> writeRecord(Map<String, dynamic> data, String id) async {
     final recordRef = instanceFirebase();
-    await recordRef.child(id).set(data);
+    await recordRef.child(id).update(data);
   }
   
 }

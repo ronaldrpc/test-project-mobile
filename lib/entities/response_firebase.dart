@@ -10,8 +10,8 @@ class ResponseFirebase {
     records = [];
     //print(json['Registros'].values.toList().runtimeType);
     json.forEach((key, value) {
-      final newRecord = Record.fromJson(value);
-      newRecord.id = key;
+      value['id'] = key;
+      Record newRecord = Record.fromJson(value);
       records!.add(newRecord);
     });
   }

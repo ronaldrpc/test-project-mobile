@@ -6,8 +6,9 @@ import 'package:flutter_application_1/entities/record.dart';
 class RecordForm extends StatefulWidget {
   final String action;
   final Record record;
+  final String id;
 
-  const RecordForm({Key? key, required this.action, required this.record}) : super(key: key);
+  const RecordForm({Key? key, required this.action, required this.record, required this.id}) : super(key: key);
 
   @override
   State<RecordForm> createState() => _RecordFormState();
@@ -15,11 +16,44 @@ class RecordForm extends StatefulWidget {
 
 class _RecordFormState extends State<RecordForm> {
   final formKey = GlobalKey<FormState>();
-  late Map<String, dynamic> data = widget.record.toJson();
+  Map<String, dynamic> data = {};
   bool _editable = false;
+  bool _loaded = false;
+
+  Future<void> getRecordsFromFirebase() async {
+    final connection = FirebaseConnection();
+    final recordList = await connection.getRecordByPath(widget.id);
+    if (mounted && !_loaded) {
+      setState(() {
+        data = recordList.records![0].toJson();
+      });
+      _loaded = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    getRecordsFromFirebase();
+
+    if (data.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '${_editable ? widget.action : 'Ver'} registro',
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w500)
+          ),
+        ),
+        body: const Center(
+          child: Text("Cargando...", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold))
+        )
+      );
+    }
+    else {
+      return _form(data);
+    }
+  }
+
+  Widget _form(data) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +63,6 @@ class _RecordFormState extends State<RecordForm> {
       ),
       body: Form(
         key: formKey,
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
           padding: const EdgeInsets.all(15),
           children: [
@@ -38,9 +71,6 @@ class _RecordFormState extends State<RecordForm> {
               children: [
                 const Text("Editable", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
                 Switch.adaptive(
-                  // activeColor: Colors.blueAccent,
-                  // activeTrackColor: Colors.blue.withOpacity(0.4),
-                  // inactiveThumbColor: Colors.orange,
                   value: _editable,
                   onChanged: (value) => setState(() => _editable = value)
                 )
@@ -53,7 +83,7 @@ class _RecordFormState extends State<RecordForm> {
             const SizedBox(height: 16),
             formTextField("apellido", data),
             const SizedBox(height: 16),
-            formNumberField("cell", data),
+            formNumberField("cel", data),
             const SizedBox(height: 16),
             formTextField("licencia", data),
 
@@ -82,7 +112,7 @@ class _RecordFormState extends State<RecordForm> {
             const SizedBox(height: 20),
           ],
         ),
-      ),
+      )
     );
   }
 
@@ -142,10 +172,6 @@ class _RecordFormState extends State<RecordForm> {
     return OverflowBar(
       alignment: MainAxisAlignment.end,
       children: [
-        // TextButton(
-        //   onPressed: () {},
-        //   child: const Text('Cancel'),
-        // ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             onPrimary: Theme.of(context).colorScheme.onPrimary,
@@ -175,8 +201,7 @@ class _RecordFormState extends State<RecordForm> {
 
   void saveRecord() async {
     final con = FirebaseConnection();
-    final id = (widget.record.id != null) ? widget.record.id : "123";
-    await con.writeRecord(data, id!);
+    await con.writeRecord(data, data['id']);
   }
   
 }
