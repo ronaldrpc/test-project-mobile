@@ -76,7 +76,7 @@ class _MenuState extends State<Menu> {
       case 2:
         return RecordMultiForm(record: Record(), goToListView: goToList);
       case 3:
-        return ProfileView(data: data);
+        return ProfileView(/*data: data*/);
       default:
         return _home();
     }
@@ -102,7 +102,7 @@ class _MenuState extends State<Menu> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFF584CD1),
+        selectedItemColor: Color.fromRGBO(0, 41, 102, 1),
         unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

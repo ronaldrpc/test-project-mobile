@@ -1,91 +1,158 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class ProfileView extends StatefulWidget {
-  final Map<String, dynamic> data;
-  const ProfileView({Key? key, required this.data}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
 
   @override
-  State<ProfileView> createState() => _ProfileViewState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
-  // Map<String, dynamic> data = {
-  //   "nombre": 'Admin',
-  //   "apellido": "istrador",
-  //   "correo": "admin@admin.com",
-  //   "contacto": 12345,
-  // };
-
+class _MyHomePageState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Perfil de usuario', 
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500)
+        appBar: AppBar(
+          title: const Text('Perfil de usuario',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500)),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(25),
-        children: [
-          const CircleAvatar(
-            backgroundColor: Colors.black,
-            radius: 100,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://m.media-amazon.com/images/I/41bzx00f+NL._AC_SX355_.jpg"
-              ),
-              radius: 99,
-            ),
-          ),
-          const SizedBox(height: 15),
-          _info(const Icon(Icons.person), "Nombre", "Alatus Nemesos"),
-          _info(const Icon(Icons.info_outline_rounded), "Acerca de", "Last guardian yaksha"),
-          _info(const Icon(Icons.phone), "Contacto", "+0 123 456 789"),
-        ],
-      ),
-    );
+        body:
+            profileView() // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
-  Widget _info(icon, title, info) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 20),
-                child: icon,
+  Widget profileView() {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 40,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+          child: Stack(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 70,
+                child: ClipOval(
+                  child: Image.network(
+                    'https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg',
+                    height: 150,
+                    width: 150,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title),
-                  Text(info, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
-                ]
-              )
-            ]
+              Positioned(
+                  bottom: 1,
+                  right: 1,
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    child: Icon(
+                      Icons.add_a_photo,
+                      color: Colors.white,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.deepOrange,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ))
+            ],
           ),
-          Container(
-            margin: const EdgeInsets.only(right: 10),
-            child: const Icon(Icons.edit),
-          )
-        ],
-      ),
+        ),
+        Expanded(
+            child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color.fromARGB(255, 34, 81, 155),
+                    Color.fromARGB(255, 18, 49, 99)
+                  ])),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
+                child: Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Maria Hernandez',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(width: 1.0, color: Colors.white70)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 4),
+                child: Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'correoelectronico@gmail.com',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(width: 1.0, color: Colors.white70)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 4),
+                child: Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Developer',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(width: 1.0, color: Colors.white70)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 4),
+                child: Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '+57 3046344369',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(width: 1.0, color: Colors.white70)),
+                ),
+              ),
+            ],
+          ),
+        ))
+      ],
     );
   }
 }
-
-
-
-            // const SizedBox(height: 16),
-            // FormTextField(field: "nombre", data: widget.data, setState: setState),
-            // const SizedBox(height: 16),
-            // FormTextField(field: "apellido", data: widget.data, setState: setState),
-            // const SizedBox(height: 16),
-            // FormTextField(field: "correo", data: widget.data, setState: setState),
-            // const SizedBox(height: 16),
-            // FormNumberField(field: "contacto", data: widget.data, setState: setState),
