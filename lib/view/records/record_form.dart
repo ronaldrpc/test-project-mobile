@@ -33,6 +33,17 @@ class _RecordFormState extends State<RecordForm> {
         child: ListView(
           padding: const EdgeInsets.all(15),
           children: [
+            CircleAvatar(
+              radius: 70,
+              child: ClipOval(
+                child: Image.network(
+                  data['image'],
+                  height: 150,
+                  width: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
