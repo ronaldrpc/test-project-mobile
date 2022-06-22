@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/firebase_connection.dart';
 import 'package:flutter_application_1/entities/record.dart';
+import 'package:flutter_application_1/view/forms/form_check_field.dart';
+import 'package:flutter_application_1/view/forms/form_text_field.dart';
+import 'package:flutter_application_1/view/forms/forms_number_field.dart';
 
 
 class RecordForm extends StatefulWidget {
@@ -90,33 +93,33 @@ class _RecordFormState extends State<RecordForm> {
             const SizedBox(height: 10),
             const Text("Usuario", style: TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
-            formTextField("nombre", data),
+            FormTextField(field: "nombre", data: data, setState: setState, editable: _editable),
             const SizedBox(height: 16),
-            formTextField("apellido", data),
+            FormTextField(field: "apellido", data: data, setState: setState, editable: _editable),
             const SizedBox(height: 16),
-            formNumberField("cel", data),
+            FormNumberField(field: "cel", data: data, setState: setState, editable: _editable),
             const SizedBox(height: 16),
-            formTextField("licencia", data),
+            FormTextField(field: "licencia", data: data, setState: setState, editable: _editable),
 
             const SizedBox(height: 25),
             const Text("Carro", style: TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
-            formTextField("Color", data['Carro']),
+            FormTextField(field: "Color", data: data['Carro'], setState: setState, editable: _editable),
             const SizedBox(height: 16),           
-            formTextField("marca", data['Carro']),
+            FormTextField(field: "marca", data: data['Carro'], setState: setState, editable: _editable),
             const SizedBox(height: 16),           
-            formNumberField("modelo", data['Carro']),
+            FormNumberField(field: "modelo", data: data['Carro'], setState: setState, editable: _editable),
             const SizedBox(height: 16),           
-            formTextField("placa", data['Carro']),
+            FormTextField(field: "placa", data: data['Carro'], setState: setState, editable: _editable),
 
             const SizedBox(height: 25),
             const Text("Servicio", style: TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
-            formCheckField("lavado", data['Servicio']),
+            FormCheckField(field: "lavado", data: data['Servicio'], setState: setState, editable: _editable),
             const SizedBox(height: 16),
-            formCheckField("polish", data['Servicio']),
+            FormCheckField(field: "polish", data: data['Servicio'], setState: setState, editable: _editable),
             const SizedBox(height: 16),
-            formCheckField("tapiceria", data['Servicio']),
+            FormCheckField(field: "tapiceria", data: data['Servicio'], setState: setState, editable: _editable),
 
             const SizedBox(height: 20),
             formSubmit(),
@@ -124,58 +127,6 @@ class _RecordFormState extends State<RecordForm> {
           ],
         ),
       )
-    );
-  }
-
-  Widget formTextField(field, data) {
-    return TextFormField(
-      readOnly: !_editable,
-      decoration: InputDecoration(
-        filled: !_editable,
-        labelText: "${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}",
-        border: const OutlineInputBorder(),
-      ),
-      initialValue: data[field],
-      validator: (value) {
-        if (value!.length < 2) {
-          return "Ingrese al menos 2 caracteres";
-        } else {
-          return null;
-        }
-      },
-      onChanged: (value) => setState(() => data[field] = value),
-    );
-  }
-
-  Widget formNumberField(field, data) {
-    return TextFormField(
-      readOnly: !_editable,
-      decoration: InputDecoration(
-        filled: !_editable,
-        labelText: "${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}",
-        border: const OutlineInputBorder(),
-      ),
-      initialValue: (data[field] != null) ? data[field].toString() : "",
-      validator: (value) {
-        if (value!.length < 2) {
-          return "Ingrese al menos 2 caracteres";
-        } else {
-          return null;
-        }
-      },
-      keyboardType: TextInputType.number,
-      onChanged: (value) => setState(() => data[field] = int.parse(value)),
-    );
-  }
-
-  Widget formCheckField(field, data) {
-    final isChecked = (data[field] == "si") ? true : false;
-    return CheckboxListTile(
-      title: Text("${field.toString()[0].toUpperCase()}${field.toString().substring(1).toLowerCase()}"),
-      value: isChecked,
-      onChanged: !_editable ? null : (value) => setState(() {
-        data[field] = (value!) ? "si" : "no";
-      })
     );
   }
 

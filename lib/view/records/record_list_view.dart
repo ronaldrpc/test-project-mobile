@@ -146,7 +146,6 @@ class CustomCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (content) {
                         return RecordForm(action: "Editar", record: Record(), id: records[index].id!);
-                        // return GetRecord(action: "Editar", recordId: records[index].id!);
                       }
                     )
                   );

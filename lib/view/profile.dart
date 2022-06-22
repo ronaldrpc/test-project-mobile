@@ -68,7 +68,7 @@ class _MyHomePageState extends State<ProfileView> {
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    Color.fromARGB(255, 34, 81, 155),
+                    Color.fromARGB(255, 58, 120, 219),
                     Color.fromARGB(255, 18, 49, 99)
                   ])),
           child: Column(
